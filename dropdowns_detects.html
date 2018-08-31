@@ -1,0 +1,150 @@
+<html lang="en-US">
+
+<head>
+    <style>
+        #cssform {
+            background-color: darkgreen;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            display: none;
+        }
+
+        #reset {
+            background-color: cornflowerblue;
+            color: white;
+            border: none;
+            display: inline-block;
+            font-size: 16px;
+            padding: 5px 15px;
+            margin-top: 150px;
+            border-radius: 15px;
+            display: none;
+        }
+
+        #removeval {
+            background-color: cornflowerblue;
+            color: white;
+            border: none;
+            display: inline-block;
+            font-size: 16px;
+            padding: 5px 15px;
+            margin-top: 10px;
+            border-radius: 15px;
+            display: block;
+        }
+
+        #help {
+            background-color: cornflowerblue;
+            color: white;
+            border: none;
+            display: inline-block;
+            font-size: 16px;
+            padding: 5px 15px;
+            margin-top: 10px;
+            border-radius: 15px;
+            display: block;
+        }
+
+        #detectmessage {
+            font-family: "Helvetica Neue", "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+            font-size: 16px;
+            margin-top: .5em;
+            margin-bottom: 5px;
+        }
+    </style>
+    <script>
+        function dropdownChange() {
+            if (document.getElementById("cards").value == "blank") {
+                document.getElementById("cssform").style.display = "none";
+                document.getElementById("reset").style.display = "none";
+                document.getElementById("message").innerHTML = "You have to select a value.";
+            }
+            else if (document.getElementById("cards").value == "visa") {
+                document.getElementById("cssform").style.display = "none";
+                document.getElementById("reset").style.display = "none";
+                document.getElementById("message").innerHTML = "Selected card is Visa";
+            }
+            else if (document.getElementById("cards").value == "master") {
+                document.getElementById("cssform").style.display = "none";
+                document.getElementById("reset").style.display = "none";
+                // document.getElementById("message").innerHTML = "Selected card is MasterCard";
+                if (navigator.userAgent.indexOf("Firefox") != -1) {
+                    document.getElementById("message").innerHTML = "Firefox is not supported";
+                }
+            }
+            else if (document.getElementById("cards").value == "amex") {
+                document.getElementById("message").innerHTML = "Selected card is American Express";
+                document.getElementById("cssform").style.display = "block";
+                document.getElementById("reset").style.display = "none";
+                document.getElementById("cssform").style.backgroundColor = "red";
+            }
+            else if (document.getElementById("cards").value == "diners") {
+                document.getElementById("cssform").style.display = "none";
+                document.getElementById("reset").style.display = "none";
+                document.getElementById("message").innerHTML = "Selected card is MasterCard";
+            }
+            else if (document.getElementById("cards").value == "discover") {
+                document.getElementById("message").innerHTML = "きゅうかな";
+                document.getElementById("cssform").style.display = "block";
+                document.getElementById("reset").style.display = "none";
+            }
+            else if (document.getElementById("cards").value == "test") {
+                document.getElementById("cards").disabled = true;
+                document.getElementById("message").innerHTML = "An error has occurred!";
+                document.getElementById("reset").style.display = "block";
+            }
+        }
+
+        function reset() {
+            document.getElementById("cards").disabled = false;
+        }
+
+        window.onload = function detectBrowser() {
+            if (navigator.userAgent.indexOf("Firefox") != -1) {
+                document.getElementById("detectmessage").innerHTML = "Not all functionailites may work under Firefox";
+            }
+            
+            if (navigator.userAgent.indexOf("Chrome") != -1) {
+                document.getElementById("detectmessage").innerHTML = "We support Chrome";
+            }
+            
+            if (navigator.userAgent.indexOf("MSIE") != -1) {
+                document.getElementById("detectmessage").innerHTML = "IE might not work at all";
+            }
+            
+            if (navigator.userAgent.indexOf("WOW64") != -1) {
+                document.getElementById("detectmessage").innerHTML = "IE might not work at all";
+            }
+            
+            if (navigator.userAgent.indexOf("Edge") != -1) {
+                document.getElementById("detectmessage").innerHTML = "Microsoft Edge is OK";
+            }
+        };
+
+        detectBrowser();
+
+    </script>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <div id="detectmessage"></div>
+    <select id="cards" onchange="dropdownChange()">
+        <option value="blank">------</option>
+        <option value="visa">Visa</option>
+        <option value="master">MasterCard</option>
+        <option value="amex">American Express</option>
+        <option value="diners">Diners</option>
+        <option value="test">Testing Card</option>
+        <option value="discover">Discover</option>
+    </select>
+
+    <div id="message"></div>
+    <div id="cssform"></div>
+    <button id="reset" onclick="reset()">Reset</button>
+
+</body>
+
+</html>
